@@ -17,7 +17,7 @@ export function parsePlaywrightJUnit(xmlText: string): JUnitResult {
   const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '' })
   const root = parser.parse(xmlText)
 
-  const suites: any[] = []
+  const suites: Record<string, unknown>[] = []
   if (root.testsuites) {
     const ts = root.testsuites.testsuite
     if (Array.isArray(ts)) suites.push(...ts)
@@ -29,7 +29,7 @@ export function parsePlaywrightJUnit(xmlText: string): JUnitResult {
     else suites.push(ts)
   }
 
-  const cases: any[] = []
+  const cases: Record<string, unknown>[] = []
   for (const suite of suites) {
     if (!suite) continue
     const tcs = suite.testcase
