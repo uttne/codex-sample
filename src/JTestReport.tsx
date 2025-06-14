@@ -97,8 +97,8 @@ export default function JTestReport() {
           </ResponsiveContainer>
         </div>
       )}
-      <div className="flex gap-6">
-        <aside className="w-1/4 space-y-4">
+      <div className="flex flex-col gap-6 lg:flex-row">
+        <aside className="w-full space-y-4 lg:w-1/4">
           <ModernInputFile
             multiple
             accept="application/xml"
@@ -120,7 +120,7 @@ export default function JTestReport() {
             ))}
           </ul>
         </aside>
-        <main className="w-2/4 space-y-2 overflow-auto">
+        <main className="w-full space-y-2 overflow-auto lg:w-2/4">
           {currentTests.length > 0 && (
             <>
               <div>
@@ -148,7 +148,7 @@ export default function JTestReport() {
             </>
           )}
         </main>
-        <div className="w-1/4">
+        <div className="w-full lg:w-1/4">
           {selectedTest !== null && filteredTests[selectedTest] && (
             <pre className="whitespace-pre-wrap border p-2 rounded bg-gray-50 dark:bg-gray-800">
               {filteredTests[selectedTest].details || '詳細なし'}
