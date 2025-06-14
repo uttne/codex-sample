@@ -17,8 +17,19 @@
 ## コーディング規約
 
 - import は常に絶対パス
-- commit メッセージは Conventional Commits
 - 関数には必ずコメントを記載する
+
+## Git
+
+- commit メッセージは Conventional Commits
+- ブランチ名は英語にする
+- ブランチ名にはプレフィックスをつける
+  - 新機能 : feat/
+  - バグ修正 : fix/
+  - ドキュメントだけの変更 : docs/
+  - CI/CD : ci/
+  - リファクタ : refactor/
+  - テスト : test/
 
 ## PR
 
