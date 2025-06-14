@@ -66,7 +66,9 @@ export default function JTestReport() {
 
   const filteredTests = currentTests.filter(t => {
     if (filter === 'all') return true
-    return filter === 'passed' ? t.status === 'passed' : t.status === 'failed'
+    return filter === 'passed'
+      ? t.status === 'passed'
+      : t.status === 'failed' || t.status === 'error'
   })
 
   const chartData = reports.map((r, idx) => {
@@ -74,7 +76,7 @@ export default function JTestReport() {
     let failed = 0
     r.tests.forEach(t => {
       if (t.status === 'passed') passed += 1
-      else if (t.status === 'failed') failed += 1
+      else if (t.status === 'failed' || t.status === 'error') failed += 1
     })
     return { name: `#${idx + 1}`, passed, failed }
   })
@@ -151,9 +153,69 @@ export default function JTestReport() {
         </main>
         <div className="w-full lg:w-1/4">
           {selectedTest !== null && filteredTests[selectedTest] && (
-            <pre className="whitespace-pre-wrap border p-2 rounded bg-gray-50 dark:bg-gray-800">
-              {filteredTests[selectedTest].details || '詳細なし'}
-            </pre>
+            <div className="space-y-2 border p-2 rounded bg-gray-50 dark:bg-gray-800">
+              <p>
+                <strong>結果:</strong> {filteredTests[selectedTest].status}
+              </p>
+              {filteredTests[selectedTest].classname && (
+                <p>
+                  <strong>クラス:</strong> {filteredTests[selectedTest].classname}
+                </p>
+              )}
+              {filteredTests[selectedTest].file && (
+                <p>
+                  <strong>ファイル:</strong> {filteredTests[selectedTest].file}
+                  {filteredTests[selectedTest].line !== undefined && `:${filteredTests[selectedTest].line}`}
+                </p>
+              )}
+              {filteredTests[selectedTest].time !== undefined && (
+                <p>
+                  <strong>時間:</strong> {filteredTests[selectedTest].time}s
+                </p>
+              )}
+              {filteredTests[selectedTest].assertions !== undefined && (
+                <p>
+                  <strong>アサーション:</strong> {filteredTests[selectedTest].assertions}
+                </p>
+              )}
+              {filteredTests[selectedTest].message && (
+                <p>
+                  <strong>メッセージ:</strong> {filteredTests[selectedTest].message}
+                </p>
+              )}
+              {filteredTests[selectedTest].type && (
+                <p>
+                  <strong>タイプ:</strong> {filteredTests[selectedTest].type}
+                </p>
+              )}
+              {filteredTests[selectedTest].details && (
+                <pre className="whitespace-pre-wrap">
+                  {filteredTests[selectedTest].details}
+                </pre>
+              )}
+              {filteredTests[selectedTest].systemOut && (
+                <pre className="whitespace-pre-wrap">
+                  stdout: {filteredTests[selectedTest].systemOut}
+                </pre>
+              )}
+              {filteredTests[selectedTest].systemErr && (
+                <pre className="whitespace-pre-wrap">
+                  stderr: {filteredTests[selectedTest].systemErr}
+                </pre>
+              )}
+              {filteredTests[selectedTest].properties && (
+                <div>
+                  <strong>プロパティ:</strong>
+                  <ul className="ml-4 list-disc">
+                    {Object.entries(filteredTests[selectedTest].properties!).map(([k, v]) => (
+                      <li key={k}>
+                        {k}: {v}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>
