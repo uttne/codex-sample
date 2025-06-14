@@ -1,19 +1,11 @@
 import { useState } from 'react'
 import type { ChangeEvent } from 'react'
-
-interface TestResult {
-  name: string
-  status: string
-  details?: string
-}
-
-interface JTestResult {
-  tests: TestResult[]
-}
+import type { TestResult, JUnitResult } from '@/parsePlaywrightJUnit'
+import { parsePlaywrightJUnit } from '@/parsePlaywrightJUnit'
 
 type Filter = 'all' | 'passed' | 'failed'
 
-// JTest の結果を表示するコンポーネント
+// JUnit の結果を表示するコンポーネント
 export default function JTestReport() {
   const [tests, setTests] = useState<TestResult[]>([])
   const [filter, setFilter] = useState<Filter>('all')
@@ -24,16 +16,11 @@ export default function JTestReport() {
     if (!file) return
     try {
       const text = await file.text()
-      const data = JSON.parse(text) as JTestResult
-      if (Array.isArray(data.tests)) {
-        setTests(data.tests)
-      } else {
-        alert('Invalid JTest file')
-        setTests([])
-      }
+      const result = parsePlaywrightJUnit(text) as JUnitResult
+      setTests(result.tests)
     } catch (err) {
       console.error(err)
-      alert('Invalid JTest file')
+      alert('Invalid JUnit file')
       setTests([])
     }
   }
@@ -45,11 +32,11 @@ export default function JTestReport() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-4">JTest レポート</h1>
+      <h1 className="text-3xl font-bold mb-4">JUnit レポート</h1>
       <div className="flex justify-center gap-4 mb-4">
         <input
           type="file"
-          accept="application/json"
+          accept="application/xml"
           onChange={handleFileChange}
           className="p-2 bg-neutral-900 border border-gray-600 rounded"
         />
