@@ -44,7 +44,7 @@ export default function JTestReport() {
 
   return (
     <div className="jtest-report">
-      <h1>JTest \u30ec\u30dd\u30fc\u30c8</h1>
+      <h1>JTest レポート</h1>
       <div className="filter-bar">
         <input
           type="file"
@@ -54,16 +54,16 @@ export default function JTestReport() {
         />
         {tests.length > 0 && (
           <label>
-            \u30d5\u30a3\u30eb\u30bf\u30fc:
+            フィルター:
             <select
               value={filter}
               onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                 setFilter(e.target.value as Filter)
               }
             >
-              <option value="all">\u3059\u3079\u3066</option>
-              <option value="passed">\u6210\u529f</option>
-              <option value="failed">\u5931\u6557</option>
+              <option value="all">すべて</option>
+              <option value="passed">成功</option>
+              <option value="failed">失敗</option>
             </select>
           </label>
         )}
@@ -72,9 +72,9 @@ export default function JTestReport() {
         <table className="test-table">
           <thead>
             <tr>
-              <th>\u30c6\u30b9\u30c8\u540d</th>
-              <th>\u7d50\u679c</th>
-              <th>\u8a73\u7d30</th>
+              <th>テスト名</th>
+              <th>結果</th>
+              <th>詳細</th>
             </tr>
           </thead>
             <tbody>
@@ -84,7 +84,7 @@ export default function JTestReport() {
                   <td>{test.status}</td>
                   <td>
                     <button onClick={() => setOpenDetails(openDetails === idx ? null : idx)}>
-                      {openDetails === idx ? '\u975e\u8868\u793a' : '\u8868\u793a'}
+                      {openDetails === idx ? '非表示' : '表示'}
                     </button>
                     {openDetails === idx && <pre>{test.details || ''}</pre>}
                   </td>
