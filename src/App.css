@@ -16,6 +16,34 @@ th, td {
   padding: 0.5em;
 }
 
+tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.file-input {
+  padding: 0.5rem;
+  background-color: #1a1a1a;
+  color: inherit;
+  border-radius: 4px;
+  border: 1px solid #555;
+}
+
+@media (prefers-color-scheme: light) {
+  tr:nth-child(even) {
+    background-color: #f3f3f3;
+  }
+  .file-input {
+    background-color: #fff;
+  }
+}
+
 pre {
   text-align: left;
 }

@@ -1,4 +1,5 @@
-import { useState, ChangeEvent } from 'react'
+import { useState } from 'react'
+import type { ChangeEvent } from 'react'
 
 interface TestResult {
   name: string
@@ -10,9 +11,11 @@ interface JTestResult {
   tests: TestResult[]
 }
 
+type Filter = 'all' | 'passed' | 'failed'
+
 export default function JTestReport() {
   const [tests, setTests] = useState<TestResult[]>([])
-  const [filter, setFilter] = useState<'all' | 'passed' | 'failed'>('all')
+  const [filter, setFilter] = useState<Filter>('all')
   const [openDetails, setOpenDetails] = useState<number | null>(null)
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +31,7 @@ export default function JTestReport() {
         setTests([])
       }
     } catch (err) {
+      console.error(err)
       alert('Invalid JTest file')
       setTests([])
     }
@@ -39,27 +43,40 @@ export default function JTestReport() {
   })
 
   return (
-    <div>
+    <div className="jtest-report">
       <h1>JTest \u30ec\u30dd\u30fc\u30c8</h1>
-      <input type="file" accept="application/json" onChange={handleFileChange} />
-      {tests.length > 0 && (
-        <div>
+      <div className="filter-bar">
+        <input
+          type="file"
+          accept="application/json"
+          onChange={handleFileChange}
+          className="file-input"
+        />
+        {tests.length > 0 && (
           <label>
             \u30d5\u30a3\u30eb\u30bf\u30fc:
-            <select value={filter} onChange={(e) => setFilter(e.target.value as any)}>
+            <select
+              value={filter}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                setFilter(e.target.value as Filter)
+              }
+            >
               <option value="all">\u3059\u3079\u3066</option>
               <option value="passed">\u6210\u529f</option>
               <option value="failed">\u5931\u6557</option>
             </select>
           </label>
-          <table>
-            <thead>
-              <tr>
-                <th>\u30c6\u30b9\u30c8\u540d</th>
-                <th>\u7d50\u679c</th>
-                <th>\u8a73\u7d30</th>
-              </tr>
-            </thead>
+        )}
+      </div>
+      {tests.length > 0 && (
+        <table className="test-table">
+          <thead>
+            <tr>
+              <th>\u30c6\u30b9\u30c8\u540d</th>
+              <th>\u7d50\u679c</th>
+              <th>\u8a73\u7d30</th>
+            </tr>
+          </thead>
             <tbody>
               {filteredTests.map((test: TestResult, idx: number) => (
                 <tr key={idx}>
@@ -75,7 +92,6 @@ export default function JTestReport() {
               ))}
             </tbody>
           </table>
-        </div>
       )}
     </div>
   )
