@@ -1,0 +1,8 @@
+<testsuites>
+  <testsuite name="suite1" tests="2" failures="1">
+    <testcase name="test success" classname="a" time="0.1" />
+    <testcase name="test failure" classname="a" time="0.2">
+      <failure message="Error">Assertion error</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
