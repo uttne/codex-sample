@@ -13,6 +13,7 @@ interface JTestResult {
 
 type Filter = 'all' | 'passed' | 'failed'
 
+// JTest の結果を表示するコンポーネント
 export default function JTestReport() {
   const [tests, setTests] = useState<TestResult[]>([])
   const [filter, setFilter] = useState<Filter>('all')
@@ -43,14 +44,14 @@ export default function JTestReport() {
   })
 
   return (
-    <div className="jtest-report">
-      <h1>JTest レポート</h1>
-      <div className="filter-bar">
+    <div>
+      <h1 className="text-3xl font-bold mb-4">JTest レポート</h1>
+      <div className="flex justify-center gap-4 mb-4">
         <input
           type="file"
           accept="application/json"
           onChange={handleFileChange}
-          className="file-input"
+          className="p-2 bg-neutral-900 border border-gray-600 rounded"
         />
         {tests.length > 0 && (
           <label>
@@ -69,24 +70,31 @@ export default function JTestReport() {
         )}
       </div>
       {tests.length > 0 && (
-        <table className="test-table">
+        <table className="mx-auto w-full border-collapse">
           <thead>
             <tr>
-              <th>テスト名</th>
-              <th>結果</th>
-              <th>詳細</th>
+              <th className="border p-2">テスト名</th>
+              <th className="border p-2">結果</th>
+              <th className="border p-2">詳細</th>
             </tr>
           </thead>
             <tbody>
               {filteredTests.map((test: TestResult, idx: number) => (
-                <tr key={idx}>
-                  <td>{test.name}</td>
-                  <td>{test.status}</td>
-                  <td>
-                    <button onClick={() => setOpenDetails(openDetails === idx ? null : idx)}>
+                <tr key={idx} className="even:bg-gray-50 dark:even:bg-white/5">
+                  <td className="border p-2">{test.name}</td>
+                  <td className="border p-2">{test.status}</td>
+                  <td className="border p-2">
+                    <button
+                      className="px-2 py-1 rounded bg-gray-700 text-white hover:bg-gray-600"
+                      onClick={() =>
+                        setOpenDetails(openDetails === idx ? null : idx)
+                      }
+                    >
                       {openDetails === idx ? '非表示' : '表示'}
                     </button>
-                    {openDetails === idx && <pre>{test.details || ''}</pre>}
+                    {openDetails === idx && (
+                      <pre className="text-left mt-2">{test.details || ''}</pre>
+                    )}
                   </td>
                 </tr>
               ))}

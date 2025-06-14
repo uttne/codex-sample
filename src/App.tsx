@@ -1,9 +1,9 @@
-import './App.css'
-import JTestReport from './JTestReport'
+import JTestReport from '@/JTestReport'
 
+// アプリケーション全体を構成するコンポーネント
 function App() {
   return (
-    <div>
+    <div className="max-w-[1280px] p-8 mx-auto text-center">
       <JTestReport />
     </div>
   )
