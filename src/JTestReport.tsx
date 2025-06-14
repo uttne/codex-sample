@@ -91,8 +91,9 @@ export default function JTestReport() {
               <YAxis allowDecimals={false} />
               <Tooltip />
               <Legend />
-              <Bar dataKey="passed" fill="#4ade80" name="成功" />
-              <Bar dataKey="failed" fill="#f87171" name="失敗" />
+              {/* 成功と失敗を同じスタックに積み上げ表示する */}
+              <Bar dataKey="passed" stackId="total" fill="#4ade80" name="成功" />
+              <Bar dataKey="failed" stackId="total" fill="#f87171" name="失敗" />
             </BarChart>
           </ResponsiveContainer>
         </div>
