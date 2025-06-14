@@ -1,0 +1,26 @@
+<testsuites>
+  <testsuite name="chromium" tests="10" failures="0">
+    <testcase name="login success" classname="chromium" time="0.1" />
+    <testcase name="logout success" classname="chromium" time="0.1" />
+    <testcase name="add item" classname="chromium" time="0.2" />
+    <testcase name="view dashboard" classname="chromium" time="0.1" />
+    <testcase name="delete user" classname="chromium" time="0.1" />
+    <testcase name="search item" classname="chromium" time="0.2" />
+    <testcase name="bulk update" classname="chromium" time="0.3" />
+    <testcase name="export data" classname="chromium" time="0.2" />
+    <testcase name="import data" classname="chromium" time="0.2" />
+    <testcase name="settings page" classname="chromium" time="0.2" />
+  </testsuite>
+  <testsuite name="firefox" tests="10" failures="0">
+    <testcase name="login success" classname="firefox" time="0.1" />
+    <testcase name="logout success" classname="firefox" time="0.1" />
+    <testcase name="add item" classname="firefox" time="0.2" />
+    <testcase name="update profile" classname="firefox" time="0.1" />
+    <testcase name="remove item" classname="firefox" time="0.1" />
+    <testcase name="search item" classname="firefox" time="0.2" />
+    <testcase name="bulk update" classname="firefox" time="0.3" />
+    <testcase name="export data" classname="firefox" time="0.2" />
+    <testcase name="import data" classname="firefox" time="0.2" />
+    <testcase name="settings page" classname="firefox" time="0.2" />
+  </testsuite>
+</testsuites>
