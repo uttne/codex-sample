@@ -2,6 +2,10 @@ import { useState } from 'react'
 import type { ChangeEvent } from 'react'
 import type { TestResult, JUnitResult } from '@/parsePlaywrightJUnit'
 import { parsePlaywrightJUnit } from '@/parsePlaywrightJUnit'
+import ModernButton from '@/components/ModernButton'
+import ModernInputFile from '@/components/ModernInputFile'
+import ModernSelect from '@/components/ModernSelect'
+import ModernTable from '@/components/ModernTable'
 import {
   BarChart,
   Bar,
@@ -93,76 +97,54 @@ export default function JTestReport() {
           </ResponsiveContainer>
         </div>
       )}
-      <div className="flex gap-4">
-        <aside className="w-1/4 space-y-2">
-          <input
-            type="file"
+      <div className="flex gap-6">
+        <aside className="w-1/4 space-y-4">
+          <ModernInputFile
             multiple
             accept="application/xml"
             onChange={handleFileChange}
-            className="w-full p-2 bg-neutral-900 border border-gray-600 rounded"
           />
-          <ul className="space-y-1">
+          <ul className="space-y-2">
             {reports.map((r, idx) => (
               <li key={idx}>
-                <button
+                <ModernButton
+                  className={`w-full text-left ${selectedReport === idx ? 'bg-blue-600' : ''}`}
                   onClick={() => {
                     setSelectedReport(idx)
                     setSelectedTest(null)
                   }}
-                  className={`w-full text-left px-2 py-1 rounded ${
-                    selectedReport === idx
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 dark:bg-gray-700'
-                  }`}
                 >
                   {r.name}
-                </button>
+                </ModernButton>
               </li>
             ))}
           </ul>
         </aside>
-        <main className="w-2/4 overflow-auto">
+        <main className="w-2/4 space-y-2 overflow-auto">
           {currentTests.length > 0 && (
             <>
-              <div className="mb-2">
-                <label>
-                  フィルター:
-                  <select
-                    value={filter}
-                    onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                      setFilter(e.target.value as Filter)
-                    }
-                    className="ml-1 border rounded"
-                  >
-                    <option value="all">すべて</option>
-                    <option value="passed">成功</option>
-                    <option value="failed">失敗</option>
-                  </select>
-                </label>
+              <div>
+                <label className="mr-2">フィルター:</label>
+                <ModernSelect
+                  value={filter}
+                  onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                    setFilter(e.target.value as Filter)
+                  }
+                >
+                  <option value="all">すべて</option>
+                  <option value="passed">成功</option>
+                  <option value="failed">失敗</option>
+                </ModernSelect>
               </div>
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr>
-                    <th className="border p-2">テスト名</th>
-                    <th className="border p-2">結果</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredTests.map((test, idx) => (
-                    <tr
-                      key={idx}
-                      className={`cursor-pointer even:bg-gray-50 dark:even:bg-white/5 ${
-                        selectedTest === idx ? 'bg-blue-100 dark:bg-blue-900' : ''
-                      }`}
-                      onClick={() => setSelectedTest(idx)}
-                    >
-                      <td className="border p-2">{test.name}</td>
-                      <td className="border p-2">{test.status}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <ModernTable
+                columns={[
+                  { key: 'name', header: 'テスト名' },
+                  { key: 'status', header: '結果' }
+                ]}
+                data={filteredTests.map(t => ({ name: t.name, status: t.status }))}
+                selectedIndex={selectedTest}
+                onRowClick={idx => setSelectedTest(idx)}
+              />
             </>
           )}
         </main>
