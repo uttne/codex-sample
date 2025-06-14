@@ -1,11 +1,7 @@
 import { useState } from 'react'
 import type { ChangeEvent } from 'react'
-import type { TestResult } from '@/parsePlaywrightJUnit'
+import type { TestResult, JUnitResult } from '@/parsePlaywrightJUnit'
 import { parsePlaywrightJUnit } from '@/parsePlaywrightJUnit'
-
-interface JUnitResult {
-  tests: TestResult[]
-}
 
 type Filter = 'all' | 'passed' | 'failed'
 
