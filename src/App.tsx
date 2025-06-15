@@ -1,15 +1,14 @@
-import JTestReport from '@/JTestReport'
+import Header from '@/layout/Header'
+import JUnitReport from '@/features/junit/JUnitReport'
 
 // アプリケーション全体を構成するコンポーネント
 function App() {
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-blue-600 text-white p-4 text-xl text-center font-bold">
-        JUnit ビューア
-      </header>
+      <Header>JUnit ビューア</Header>
       <main className="flex-1 p-8">
         <div className="max-w-[1280px] mx-auto">
-          <JTestReport />
+          <JUnitReport />
         </div>
       </main>
     </div>
