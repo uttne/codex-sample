@@ -2,10 +2,10 @@ import { useState } from 'react'
 import type { ChangeEvent } from 'react'
 import type { TestResult, JUnitResult } from '@/parsePlaywrightJUnit'
 import { parsePlaywrightJUnit } from '@/parsePlaywrightJUnit'
-import ReportChart from '@/features/junit/ReportChart'
-import ReportSidebar from '@/features/junit/ReportSidebar'
-import TestList, { Filter } from '@/features/junit/TestList'
-import TestDetails from '@/features/junit/TestDetails'
+import ReportChart from '@/contents/junit/ReportChart'
+import ReportSidebar from '@/contents/junit/ReportSidebar'
+import TestList, { Filter } from '@/contents/junit/TestList'
+import TestDetails from '@/contents/junit/TestDetails'
 
 /**
  * 単一のテストファイルから得られた情報
